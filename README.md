@@ -140,6 +140,23 @@ const str = 'one.two.three.four.five';
 }*/
 ```
 
+<details>
+<summary><b>Ответ</b></summary>
+
+```javascript
+function makeObjByPath(path) {
+    const segments = path.split('.');
+    const res = {};
+    let curr = res;
+    for (const segment of segments) {
+        curr[segment] = {};
+        curr = curr[segment];
+    }
+    return res;
+}
+```
+</details>
+
 <hr />
 
 `arr.push(0)` повлияет на массив так же, как если бы мы выполнили:
@@ -151,6 +168,14 @@ const arr = [1,2,3,4,5];
 /*3*/ arr[arr.length – 1] = 0;
 /*4*/ arr[-1] = 0;
 ```
+
+<details>
+<summary><b>Ответ</b></summary>
+
+```javascript
+/*2*/ arr[arr.length] = 0;
+```
+</details>
 
 <hr />
 
@@ -168,6 +193,14 @@ console.log([
 ]);
 ```
 
+<details>
+<summary><b>Ответ</b></summary>
+
+```javascript
+[ true, true, true, false ]
+```
+</details>
+
 <hr />
 
 Что вернёт следующий код?:
@@ -175,6 +208,27 @@ console.log([
 ```javascript
 Object.create(null).hasOwnProperty('toString');
 ```
+
+<details>
+<summary><b>Ответ</b></summary>
+
+Будет выброшена ошибка, так как метод hasOwnProperty отсутствует у объекта, созданного через Object.create(null).
+
+```javascript
+TypeError: Object.create(...).hasOwnProperty is not a function
+```
+
+Чтобы избежать ошибки можно использовать `in` или `Object.prototype.hasOwnProperty`:
+
+```javascript
+'toString' in Object.create(null); // false
+```
+
+```javascript
+Object.prototype.hasOwnProperty.call(Object.create(null), 'toString'); // false
+```
+
+</details>
 
 <hr />
 
