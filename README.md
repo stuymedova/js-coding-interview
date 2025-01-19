@@ -278,6 +278,43 @@ const object = {
 */
 ```
 
+<details>
+<summary><b>Ответ</b></summary>
+
+```javascript
+function addLevelsDFS(obj, level = 1) {
+    for (const key of Object.keys(obj)) {
+        if (obj[key] instanceof Object && !Array.isArray(obj[key])) {
+            obj[key].level = level;
+            addLevelsDFS(obj[key], level + 1);
+        }
+    }
+    return obj;
+};
+```
+
+```javascript
+function addLevelsBFS(obj) {
+    let q = Object.values(obj);
+    let levelI = 1;
+    while (q.length) {
+        const level = [...q];
+        q = [];
+        for (let i = 0; i < level.length; i++) {
+            if (level[i] instanceof Object && !Array.isArray(level[i])) {
+                level[i].level = levelI;
+                for (const val of Object.values(level[i])) {
+                    q.push(val);
+                }
+            }
+        }
+        levelI += 1;
+    }
+    return obj;
+};
+```
+</details>
+
 <hr />
 
 Как можно заставить браузеры не кэшировать POST запрос?:
@@ -285,6 +322,12 @@ const object = {
 ```javascript
 // Рассказать (вопрос с подвохом)
 ```
+
+<details>
+<summary><b>Ответ</b></summary>
+
+Браузеры не кэшируют POST запрос поскольку он (согласно конвенции) является мутирующим.
+</details>
 
 <hr />
 
@@ -297,6 +340,19 @@ object.constructor.prototype = null;
 console.log(object.property); // ?
 ```
 
+<details>
+<summary><b>Ответ</b></summary>
+
+Будет выведено число 1.
+
+```javascript
+const object = {};
+object.constructor.prototype.property = 1; // все объекты наследующие от Object.prototype получают доступ к property
+object.constructor.prototype = null; // не работает, constructor.prototype нельзя переназначить так, чтобы он удалил существующую цепочку прототипов
+console.log(object.property);
+```
+</details>
+
 <hr />
 
 Что выведется в `console.log`?:
@@ -306,8 +362,27 @@ let i = 10, arr = [];
 while (i--) {
     arr.push(() => i + i);  
 }
-console.log([arr[0](), arr[0]()]); // ?
+console.log([arr[0](), arr[1]()]); // ?
 ```
+
+<details>
+<summary><b>Ответ</b></summary>
+
+```javascript
+[ -2, -2 ]
+```
+
+Для того, чтобы вывести `[ 18, 16 ]` можно отредактировать код следующим образом:
+
+```javascript
+let i = 10, arr = [];
+while (i--) {
+    const j = i;
+    arr.push(() => j + j);
+}
+console.log([arr[0](), arr[1]()]);
+```
+</details>
 
 <hr />
 
