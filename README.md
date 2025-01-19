@@ -389,13 +389,32 @@ console.log([arr[0](), arr[1]()]);
 Написать функцию, которая будет возвращать `true` если строка (слово) является палиндромом, иначе `false`:
 
 ```javascript
-function isPalindrom (str) {
+function isPalindrome(str) {
     //...
 }
-isPalindrom('казак'); // true
-isPalindrom('строка'); // false
-isPalindrom('шалаш'); // true
+isPalindrome('казак'); // true
+isPalindrome('строка'); // false
+isPalindrome('шалаш'); // true
 ```
+
+<details>
+<summary><b>Ответ</b></summary>
+
+```javascript
+function isPalindrome(str) {
+    let l = 0;
+    let r = str.length - 1;
+    while (l < r) {
+        if (str[l] !== str[r]) {
+            return false;
+        }
+        l += 1;
+        r -= 1;
+    }
+    return true;
+}
+```
+</details>
 
 <hr />
 
@@ -417,18 +436,76 @@ fizzBuzz(5);
 // buzz
 ```
 
+<details>
+<summary><b>Ответ</b></summary>
+
+```javascript
+function fizzBuzz(num) {
+    for (let i = 0; i <= num; i++) {
+        if (i % 3 === 0 && i % 5 === 0) {
+            console.log('fizzbuzz');
+        } else if (i % 3 === 0) {
+            console.log('fizz');
+        } else if (i % 5 === 0) {
+            console.log('buzz');
+        } else {
+            console.log(i);
+        }
+    }
+}
+```
+</details>
+
 <hr />
 
 Напишите функцию, проверяющую, являются ли две строки анаграммами друг друга (регистр букв не имеет значения).
 Важны только символы, пробелы или знаки препинания не учитываются:
 
 ```javascript
-function isAnagram (str) {
+function isAnagram(str1, str2) {
     //...
 }
 isAnagram('finder', 'Friend'); // true
 isAnagram('hello', 'bye'); // false
 ```
+
+<details>
+<summary><b>Ответ</b></summary>
+
+```javascript
+function isAlphaNumeric(char) {
+    return char.toLowerCase() !== char.toUpperCase() || !Number.isNaN(parseInt(char));
+}
+
+function isAnagram(str1, str2) {
+    const frequencies = {};
+    for (let i = 0; i < str1.length; i++) {
+        const char = str1[i].toLowerCase();
+        if (!isAlphaNumeric(char)) {
+            continue;
+        }
+        if (!frequencies[char]) {
+            frequencies[char] = 0;
+        }
+        frequencies[char] += 1;
+    }
+    let rest = str2.length;
+    for (let i = 0; i < str2.length; i++) {
+        const char = str2[i].toLowerCase();
+        if (!isAlphaNumeric(char)) {
+            rest -= 1;
+            continue;
+        }
+        if (!frequencies[char]) {
+            return false;
+        }
+        frequencies[char] -= 1;
+        rest -= 1;
+    }
+    return rest === 0;
+};
+```
+</details>
 
 <hr />
 
