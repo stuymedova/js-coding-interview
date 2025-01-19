@@ -18,6 +18,24 @@ test();
 console.log(a); // ?
 ```
 
+<details>
+<summary><b>Ответ</b></summary>
+Будет выведено число 5. Эквивалентная запись:
+
+```javascript
+var a = 5;
+function test () {
+    var a; // Объявление переменной через var поднимается
+    a = 10;
+    if (false) {
+        a = 20;
+    }
+}
+test();
+console.log(a); // ?
+```
+</details>
+
 <hr />
 
 Какие числа выведутся и с какой задержкой?:
@@ -29,6 +47,24 @@ for (var i = 0; i < 10; i++) {
 // Как сделать чтобы выводились числа по порядку (несколько способов)?
 ```
 
+<details>
+<summary><b>Ответ</b></summary>
+Число 10 будет выведено 10 раз. Чтобы вывести числа от 0 до 9 можно использовать следующие записи:
+    
+```javascript
+for (let i = 0; i < 10; i++) {
+    setTimeout(() => { console.log(i); }, 1000);
+}
+```
+
+```javascript
+for (var i = 0; i < 10; i++) {
+    const j = i;
+    setTimeout(() => { console.log(j); }, 1000);
+}
+```
+</details>
+
 <hr />
 
 Нечётные числа должны отсортироваться по возрастанию, а чётные должны остаться на своих местах:
@@ -37,6 +73,25 @@ for (var i = 0; i < 10; i++) {
 const nums = [1,9,4,2,3,6,7,1,5]; // [1,1,4,2,3,6,5,7,9]
 ```
 
+<details>
+<summary><b>Ответ</b></summary>
+
+```javascript
+function sortOdd(nums) {
+    const oddNums = nums
+        .filter((el) => el % 2 === 1)
+        .sort((a, b) => a - b);
+    let topI = 0;
+    return nums.map((el) => {
+        if (el % 2 === 1) {
+            return oddNums[topI++];
+        }
+        return el;
+    });
+}
+```
+</details>
+
 <hr />
 
 Найти не повторяющиеся числа:
@@ -44,6 +99,28 @@ const nums = [1,9,4,2,3,6,7,1,5]; // [1,1,4,2,3,6,5,7,9]
 ```javascript
 const arr = [1,2,3,4,1,2]; // [3,4]
 ```
+
+<details>
+<summary><b>Ответ</b></summary>
+
+```javascript
+function unique(nums) {
+    const seen = new Set();
+    const res = new Set();
+    for (const num of nums) {
+        if (seen.has(num)) {
+            if (res.has(num)) {
+                res.delete(num);
+            }
+        } else {
+            seen.add(num);
+            res.add(num);
+        }
+    }
+    return Array.from(res);
+}
+```
+</details>
 
 <hr />
 
