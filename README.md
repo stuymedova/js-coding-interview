@@ -517,3 +517,21 @@ function sum (num) {
 }
 sum(1)(2)(3)(4); // 10
 ```
+
+<details>
+<summary><b>Ответ</b></summary>
+
+```javascript
+function sum(a) {
+    let sum = a;
+    function fn(b) {
+        sum += b;
+        return fn;
+    }
+    fn.valueOf = function() {
+        return sum;
+    }
+    return fn;
+}
+```
+</details>
